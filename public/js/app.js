@@ -55,6 +55,7 @@ $(document).ready(function () {
       dataType: 'JSONP'
     }).done(function(data){
       allTheDataINeed = parseData(data.parse.text['*']);
+      console.log(allTheDataINeed)
       allTheDataINeed = allTheDataINeed.filter(function(n){ return n.length != 0 });
       console.log(allTheDataINeed)
       $.each(allTheDataINeed, function(i, item){
@@ -208,7 +209,7 @@ $(document).ready(function () {
       var data = google.visualization.arrayToDataTable(rows);
       var options = {
         legend: 'none',
-        colorAxis: {colors: ['Crimson', 'LightGreen']},
+        colorAxis: {colors: ['Crimson', 'white']},
         datalessRegionColor: 'navy',
         backgroundColor: '#81d4fa',
         tooltip: {

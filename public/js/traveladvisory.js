@@ -21,7 +21,7 @@ $.ajax({
 $.each(advisory, function(i, item){
   var c = $('<li><a row = '+i+' href="#">'+ item.country +'</a></li>').click(function(e){
     var cname = $(this).find('a').text();
-    // $("#nav-advisory-selection").text('Avisory for ' +cname);
+    // $("#nav-advisory-selection").text('Alert for ' +cname);
     });
     $("#nav-advisory").append(c);
   });
