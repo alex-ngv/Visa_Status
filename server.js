@@ -3,7 +3,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     fs = require('fs'),
     app = express(),
-    query = require('./helpers/cartoHelper.js')
+    query = require('./helpers/cartoHelper.js'),
+    port = process.env.PORT || 3000;
 
     app.use(logger('dev'));
     app.use(bodyParser.urlencoded({ extended: true }));
@@ -11,7 +12,7 @@ var express = require('express'),
     app.use(express.static('public'));
     app.use('/bower_components',  express.static(__dirname + '/bower_components'));
     //Set up the port to listen
-    app.listen(3000, function () {
+    app.listen(port, function () {
       console.log('App listening on port 3000...');
     });
     //controllers
