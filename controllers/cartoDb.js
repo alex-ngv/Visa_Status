@@ -10,5 +10,13 @@ module.exports.controller = function(app){
     query.warning(function(data){
       res.send(data)
     })
+  }),
+  app.get('/passportinfo', function(req, res){
+    
+    origin = req.query.origin;
+    dest= req.query.dest;
+    query.passportinfo(origin, dest, function(data){
+      res.send(data);
+    })
   })
 };

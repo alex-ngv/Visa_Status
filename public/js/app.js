@@ -1,25 +1,31 @@
 var CONFIG= {
   visaStringValues : {
-    'Visa required':0,
-    'Tourist Card required':1,
-    'Visa required !Tourist Card required':1,
+    'Visa required':3,
+    'Tourist Card required':3,
+    'Visa required !Tourist Card required':3,
+    'Access Permit required':3,
     'Visa on arrival':2,
-    'Access Permit required':2,
     "Visitor's permit on arrival":2,
     'Tourist Card on arrival':2,
     'Entry Permit on arrival':2,
-    "Visa on arrival !Visitor's Permit on arrival":3,
-    'Visa on arrival !Tourist Card on arrival':3,
-    "Visa on arrival !Visitor's permit on arrival":3,
-    'e-Tourist Visa':3,
-    'eVisa':4,
-    'e-Visa':4,
-    'Online reciprocity fee':5,
-    'Electronic Travel Authorization':6,
-    'Electronic Travel Authority':7,
-    'Visa not required':8,
-    '':0
+    "Visa on arrival !Visitor's Permit on arrival":2,
+    'Visa on arrival !Tourist Card on arrival':2,
+    "Visa on arrival !Visitor's permit on arrival":2,
+    'Online reciprocity fee':1,
+    'e-Tourist Visa':1,
+    'eVisa':1,
+    'e-Visa':1,
+    'Electronic Travel Authorization':1,
+    'Electronic Travel Authority':1,
+    'Visa not required':0,
+    '':3
   },
+
+  // Visa free access
+  // Electronic authorization or online payment required / eVisa
+  // Visa issued upon arrival or visa-free entry upon arrival with payment of reciprocity fee
+  // Visa required prior to arrival
+
   nameConversions: {
     'Australia and territories'   : 'Australia',
     'Denmark and territories'     : 'Denmark',
@@ -42,22 +48,31 @@ var mapState = {
 
 $(document).ready(function () {
 
+// var otherPassportLoader = new externalPassortInfo('MD', 'US');
+// otherPassportLoader.loadHtml();
+
+  goToBottom = function(){
+    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+  };
   $('#country-info').hide()
   $('#animated').hide()
+  $('#passportinfo').hide()
+
+
   var visaRows = [['Country', 'Visa Data',{role: 'tooltip', p:{html:true}}]];
   var allTheDataINeed;
   var myClickHandler = function(){};
   var myTravelClickHandler = function(){};
 
   function loadDataOnTheMap(){
+    goToBottom();
+    $("#loading").show();
     $.ajax({
       url:'https://en.wikipedia.org/w/api.php?action=parse&format=json&page=Visa_requirements_for_United_States_citizens&redirects&section=2',
       dataType: 'JSONP'
     }).done(function(data){
       allTheDataINeed = parseData(data.parse.text['*']);
-      console.log(allTheDataINeed)
       allTheDataINeed = allTheDataINeed.filter(function(n){ return n.length != 0 });
-      console.log(allTheDataINeed)
       $.each(allTheDataINeed, function(i, item){
         visaRows.push([item[0],item[4],item[1]])
         var c = $('<li><a row = '+i+' href="#">'+ item[0] +'</a></li>').click(function(e){
@@ -67,23 +82,36 @@ $(document).ready(function () {
           $("#nav-countries").append(c);
         });
       // loadVisaData();
+
+      $("#loading").hide();
       })
     }
 
-    $(".dropdown").on('click','#nav-countries li > a',function(e){
-      countryInfo(allTheDataINeed[$(this).attr('row')])
+    $(".btn-group").on('click','#nav-countries li > a',function(e){
+      countryInfo(allTheDataINeed[$(this).attr('row')]);
+      loadVisaData();
+      // goToBottom();
       console.log(e)
     });
 
-    $(".dropdown").on('click','#nav-advisory li > a',function(e){
-      countryAdvisoryInfo(advisory[$(this).attr('row')])
+    $(".btn-group").on('click','#nav-advisory li > a',function(e){
+      countryAdvisoryInfo(advisory[$(this).attr('row')]);
+      loadTravelAdvisoryData();
       console.log(e)
     });
 
-    $(".dropdown").on('click','#nav-warning li > a',function(e){
-      countryAdvisoryInfo(warnings[$(this).attr('row')])
+    $(".btn-group").on('click','#nav-warning li > a',function(e){
+      countryAdvisoryInfo(warnings[$(this).attr('row')]);
+      loadTravelWarningData();
       console.log(e)
     });
+    $('#testpassportinfo').click(function(){
+      var otherPassportLoader = new externalPassortInfo('FR', 'US');
+      otherPassportLoader.loadHtml(function(data){
+        passportinfo(data);
+      });
+
+    })
 
   window.setTimeout( loadDataOnTheMap, 1);
 
@@ -208,8 +236,7 @@ $(document).ready(function () {
   addVisaData = function(rows) {
       var data = google.visualization.arrayToDataTable(rows);
       var options = {
-        legend: 'none',
-        colorAxis: {colors: ['Crimson', 'white']},
+        colorAxis: {colors: ['LightGreen', 'gold', 'Crimson']},
         datalessRegionColor: 'navy',
         backgroundColor: '#81d4fa',
         tooltip: {
@@ -228,6 +255,32 @@ $(document).ready(function () {
       google.visualization.events.addListener(chart, 'select', myClickHandler);
       chart.draw(data,options);
       setCurrentMapState(mapState.visa);
+
+      google.visualization.events.addListener(chart, 'select', function () {
+          var selection = chart.getSelection();
+          if (selection.length > 0) {
+              var view = new google.visualization.DataView(data);
+              view.setColumns([rows, {
+                  type: 'number',
+                  label: data.getColumnLabel(1),
+                  calc: function (dt, row) {
+                      return (selection[0].row == row) ? 4 : 1;
+                  }
+              }]);
+              chart.draw(view, options);
+          }
+          else {
+              chart.draw(data, options);
+          }
+      });
+  }
+  var passportinfo = function(data){
+    $('#passportinfo').empty()
+    $('#passportinfo').show()
+    $('#passportinfo').animate({
+      height: '600px'
+    });
+    $('#passportinfo').html(data)
   }
 
   var countryAdvisoryInfo = function(data){

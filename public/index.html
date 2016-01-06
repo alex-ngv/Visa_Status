@@ -20,43 +20,55 @@
       </button>
       <a class="navbar-brand" href="#">US Travel Visa Information</a>
     </div>
-
+    <p>
+    </p>
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="dropdown">
-          <a id="nav-countries-selection" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Find Country Visa Information<span class="caret"></span></a>
-          <ul id="nav-countries" class="dropdown-menu scrollable-menu">
-          </ul>
-        </li>
-
-        <li class="dropdown">
-          <a id="nav-advisory-selection" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Find Travel Alert Information<span class="caret"></span></a>
-          <ul id="nav-advisory" class="dropdown-menu scrollable-menu">
-          </ul>
-        </li>
-
-        <li class="dropdown">
-          <a id="nav-warning-selection" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Find Travel Warning Information<span class="caret"></span></a>
-          <ul id="nav-warning" class="dropdown-menu scrollable-menu">
-          </ul>
-        </li>
+    <div class="btn-group">
+      <button id="nav-countries-selection" type="button" class="btn btn-primary">Show Country Visa Information</button>
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul id="nav-countries" class="dropdown-menu scrollable-menu">
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-  </nav>
-<br>
-<br>
-  <div id="wrapper">
-    <div id=>
-
     </div>
+    <div class="btn-group">
+      <button id="nav-advisory-selection" type="button" class="btn btn-default">Show Travel Alert Information</button>
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul id="nav-advisory" class="dropdown-menu scrollable-menu">
+      </ul>
+    </div>
+
+    <div class="btn-group">
+      <button id="nav-warning-selection" type="button" class="btn btn-default">Show Travel Warning Information</button>
+      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul id="nav-warning" class="dropdown-menu scrollable-menu">
+      </ul>
+    </div>
+    <a class="btn btn-default" href="#" id='testpassportinfo' role="button">Link</a>
+
+  </nav>
+<!-- <br>
+<br> -->
+  <div id="wrapper">
       <div id="regions_div"></div>
       <div id='country-info'></div>
       <div id='animated'></div>
+      <div id="loading">
+        <img src="http://sports.ndtv.com/images/loading.gif" alt="" />
+      </div>
+      <div id='passportinfo'></div>
   </div>
 
+
   <template id="info-view" type="text/x-handlebars-template">
+    <h6 id='close'>click here close</h6>
     <div id="coutnry">
     <h2 id='country-name'>{{country}}</h2>
     <h3>{{visa}}</h3>
@@ -68,6 +80,7 @@
   </template>
 
   <template id="advisory" type="text/x-handlebars-template">
+    <h6>click here close</h6>
     <h2>{{country}}</h2>
     <h3>{{title}}</h3>
     <h5>{{date}}</h5>
@@ -84,6 +97,7 @@
   <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['geochart']}]}"></script>
   <script type="text/javascript" src="/js/traveladvisory.js"></script>
   <script type="text/javascript" src="/js/warningadvisory.js"></script>
+  <script type="text/javascript" src="/js/visapassport.js"></script>
 
 </body>
 </html>
