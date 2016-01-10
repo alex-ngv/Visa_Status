@@ -2,35 +2,17 @@
 
 
 var externalPassortInfo = function( origin, dest){
-
   path = '/passportinfo?origin=' + origin + '&dest=' + dest;
-
-
-  var html;
-
-
-
-  this.loadHtml = function(callback)
-  {
-
+  this.loadHtml = function(callback){
     $.ajax({
       url: path
-
     }).done(function(data){
-
-      var result = data.match(/<pre class=\"normal\">([\s\S]*?)<\/pre>/);
-
-
-      callback(result[0]);
+      var elements = $(data).find('pre');
+      var pass_info = (elements[0].innerHTML).replace(/<img[^>]*>/g,"")
+      .replace(/(<a href="java[^>]*>For details, click here<\/a>)/g,"")
+      .replace(/(CHECK.*)/g,"")
+      .replace(/DE([^>]*)/g,"");
+      callback(pass_info);
     });
-
-
-
-
-
-
-
-  }
-
-
-}
+  };
+};

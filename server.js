@@ -15,6 +15,10 @@ var express = require('express'),
     app.listen(port, function () {
       console.log('App listening on port 3000...');
     });
+
+
+
+
     //controllers
     fs.readdirSync('./controllers').forEach(function (file) {
       if(file.substr(-3) == '.js') {

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <nav class="navbar navbar-inverse navbar-fixed-top" id='navbar'>
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -23,52 +23,75 @@
     <p>
     </p>
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="btn-group">
-      <button id="nav-countries-selection" type="button" class="btn btn-primary">Show Country Visa Information</button>
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="caret"></span>
-        <span class="sr-only">Toggle Dropdown</span>
-      </button>
-      <ul id="nav-countries" class="dropdown-menu scrollable-menu">
-      </ul>
-    </div>
-    <div class="btn-group">
-      <button id="nav-advisory-selection" type="button" class="btn btn-default">Show Travel Alert Information</button>
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="caret"></span>
-        <span class="sr-only">Toggle Dropdown</span>
-      </button>
-      <ul id="nav-advisory" class="dropdown-menu scrollable-menu">
-      </ul>
-    </div>
 
-    <div class="btn-group">
-      <button id="nav-warning-selection" type="button" class="btn btn-default">Show Travel Warning Information</button>
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span class="caret"></span>
-        <span class="sr-only">Toggle Dropdown</span>
-      </button>
-      <ul id="nav-warning" class="dropdown-menu scrollable-menu">
-      </ul>
-    </div>
-    <a class="btn btn-default" href="#" id='testpassportinfo' role="button">Link</a>
-
-  </nav>
-<!-- <br>
-<br> -->
-  <div id="wrapper">
-      <div id="regions_div"></div>
-      <div id='country-info'></div>
-      <div id='animated'></div>
-      <div id="loading">
-        <img src="http://sports.ndtv.com/images/loading.gif" alt="" />
+    <div class="btn-group" role="group" aria-label="...">
+      <div class="btn-group">
+        <button id="nav-countries-selection" type="button" class="btn btn-default">Show Country Visa Information</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul id="nav-countries" class="dropdown-menu scrollable-menu">
+        </ul>
       </div>
-      <div id='passportinfo'></div>
+      <div class="btn-group">
+        <button id="nav-advisory-selection" type="button" class="btn btn-default">Show Travel Alert Information</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul id="nav-advisory" class="dropdown-menu scrollable-menu">
+        </ul>
+      </div>
+      <div class="btn-group">
+        <button id="nav-warning-selection" type="button" class="btn btn-default">Show Travel Warning Information</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul id="nav-warning" class="dropdown-menu scrollable-menu">
+        </ul>
+      </div>
+      <a class="btn btn-default" href="#" id='get_passport_data'  role="button">Non US Passport Info</a>
+    </div>
+    </div>
+  </nav>
+
+  <!-- Pop Ins -->
+
+  <div id="wrapper">
+    <div class="btn-group" role="group" aria-label="..." id='passportdata'>
+      <div class="btn-group" role="group" id='origin_test'>
+        <button id='origin_button' class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          Origin Passport
+          <span class="caret"></span>
+        </button>
+        <ul id='origin_dd' class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
+        </ul>
+      </div>
+      <div class="btn-group" role="group">
+        <button id='destination_button' class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          Destination
+          <span class="caret"></span>
+        </button>
+        <ul id='destination_dd' class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu1">
+        </ul>
+      </div>
+      <button type="button" id='get_countryCodes' class="btn btn-default">Submit</button>
+    </div>
+    <div id="passport_info"></div>
+    <div id="regions_div"></div>
+    <div id="country_info"></div>
+    <div id="travel_info"></div>
+    <div id="loading">
+      <img src="http://sports.ndtv.com/images/loading.gif" alt="" />
+    </div>
   </div>
 
+  <!-- Templates -->
 
   <template id="info-view" type="text/x-handlebars-template">
-    <h6 id='close'>click here close</h6>
+    <h6 id='close'>click window to close</h6>
     <div id="coutnry">
     <h2 id='country-name'>{{country}}</h2>
     <h3>{{visa}}</h3>
@@ -80,7 +103,7 @@
   </template>
 
   <template id="advisory" type="text/x-handlebars-template">
-    <h6>click here close</h6>
+    <h6>click window to close</h6>
     <h2>{{country}}</h2>
     <h3>{{title}}</h3>
     <h5>{{date}}</h5>
@@ -92,7 +115,6 @@
   <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="/bower_components/handlebars/handlebars.js"></script>
   <script src="/js/app.js"></script>
-  <script src="http://d3js.org/queue.v1.min.js"></script>
   <script src="/js/nav.js"></script>
   <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['geochart']}]}"></script>
   <script type="text/javascript" src="/js/traveladvisory.js"></script>
