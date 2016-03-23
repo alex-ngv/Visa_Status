@@ -29,7 +29,7 @@ var CONFIG= {
   nameConversions: {
     'Australia and territories'   : 'Australia',
     'Denmark and territories'     : 'Denmark',
-    'Netherlands and territories' : 'Netherlands',
+    'Kingdom of the Netherlands' : 'Netherlands',
     'United Kingdomexcluding some Overseas territories':'United Kingdom',
     'Sahrawi Arab Democratic Republic' : 'Western Sahara'
   }
@@ -51,9 +51,9 @@ $(document).ready(function () {
   var goToBottom = function () {
     $("html, body").animate({ scrollTop: $(document).height() }, "slow");
   };
-  $('#country_info').hide()
-  $('#travel_info').hide()
-  $('#passport_info').hide()
+  $('#country_info').hide();
+  $('#travel_info').hide();
+  $('#passport_info').hide();
 
 
   var visaRows = [['Country', 'Visa Data',{role: 'tooltip', p:{html:true}}]];
@@ -102,7 +102,7 @@ $(document).ready(function () {
           });
           $("#nav-countries").append(c);
         });
-      // loadVisaData();
+      loadVisaData();
       $("#loading").hide();
       })
     }
@@ -168,7 +168,7 @@ $(document).ready(function () {
     var container = document.getElementById('regions_div');
     var chart = new google.visualization.GeoChart(container);
     var options = {
-      legend: 'none',
+      legend: {textStyle: {color: 'blue', fontSize: 16}},
       colorAxis: {colors: ['#B22222', 'gold']},
       datalessRegionColor: 'LightGreen',
       backgroundColor: '#81d4fa',
@@ -265,11 +265,11 @@ $(document).ready(function () {
     });
   };
 
+  // Making the bottons in the navbar function
 
   $(".btn-group").on('click','#nav-countries li > a',function(e){
     countryInfo(allTheDataINeed[$(this).attr('row')]);
     loadVisaData();
-    // goToBottom();
   });
 
   $(".btn-group").on('click','#nav-advisory li > a',function(e){
@@ -360,6 +360,7 @@ $(document).ready(function () {
   var countryInfo = function(data){
     $('#country_info').empty()
     $('#country_info').show()
+    loadVisaData()
     var dataObj = {
       country: data[0],
       stay: data[2],
@@ -368,11 +369,11 @@ $(document).ready(function () {
     }
     var template = Handlebars.compile($('#info-view').html())
     $("#country_info").append(template(dataObj))
-  }
+  };
 
   loadVisaData = function(){
     addVisaData(visaRows);
-    }
+  };
 
     $(window).resize(function() {
     if(this.resizeTO) clearTimeout(this.resizeTO);

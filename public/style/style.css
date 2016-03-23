@@ -1,3 +1,7 @@
+/*body{
+  overflow-x: hidden;
+  overflow-y: hidden;
+}*/
 .scrollable-menu {
     height: auto;
     max-height: 200px;
@@ -44,11 +48,12 @@
   font-size: 2em;
   position: absolute;
   left: 10px;
-  top: 30%;
+  top: 15%;
   z-index: 99;
   word-wrap: normal;
   width: auto;
   max-width: 300px;
+  min-width: 60px;
   height: 20%auto;
   background-color: lightgray;
   border-radius: 10px;
@@ -65,7 +70,7 @@
   width: 640px;
   height:0px;
   left: 25%;
-  bottom: 0%;
+  bottom: 5%;
   background-color: lightgrey;
   border-top-left-radius: 10px;
   padding-left: 20px;
@@ -81,7 +86,12 @@
 }
 #loading{
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 35%;
+  left: 40%;
   display: none;
+}
+#github{
+  width: 40px;
+  height: 40px;
+  float: right;
 }
